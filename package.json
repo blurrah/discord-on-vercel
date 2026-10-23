@@ -1,0 +1,19 @@
+{
+  "name": "discord-on-vercel",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.34.5",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "dev": "turbo run dev",
+    "test": "turbo run test",
+    "typecheck": "turbo run typecheck",
+    "commands:register": "pnpm --filter @discord-on-vercel/bot commands:register"
+  },
+  "devDependencies": {
+    "turbo": "^2.11.10",
+    "typescript": "^6.0.3"
+  }
+}
