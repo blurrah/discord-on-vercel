@@ -1,0 +1,27 @@
+{
+  "name": "@discord-on-vercel/gateway",
+  "private": true,
+  "type": "module",
+  "files": [
+    "src"
+  ],
+  "exports": {
+    "./protocol": "./src/protocol.ts"
+  },
+  "scripts": {
+    "dev": "node --watch --env-file-if-exists=../../.env.local --env-file-if-exists=.env.development src/index.ts",
+    "start": "node src/index.ts",
+    "test": "node --test test/*.test.ts",
+    "typecheck": "tsc"
+  },
+  "dependencies": {
+    "@discordjs/rest": "^2.6.3",
+    "@discordjs/ws": "^2.0.4"
+  },
+  "devDependencies": {
+    "@types/node": "^24.19.2",
+    "@types/ws": "^8.18.2",
+    "discord-api-types": "^0.38.57",
+    "ws": "^8.22.0"
+  }
+}

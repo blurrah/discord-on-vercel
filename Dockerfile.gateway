@@ -1,0 +1,19 @@
+# The `gateway` daemon (see vercel.json). It lives at the repository root
+# because Vercel uses the Dockerfile's directory as the build context, and the
+# gateway installs its dependencies from the workspace lockfile.
+FROM node:24-alpine AS build
+RUN npm install --global pnpm@10.34.5
+WORKDIR /repo
+COPY pnpm-lock.yaml pnpm-workspace.yaml ./
+RUN pnpm fetch --prod
+COPY . .
+RUN pnpm install --frozen-lockfile --offline --prod --filter @discord-on-vercel/gateway
+
+# Node 24 runs the TypeScript sources directly (type stripping).
+FROM node:24-alpine
+ENV NODE_ENV=production
+COPY --from=build /repo/node_modules /app/node_modules
+COPY --from=build /repo/apps/gateway /app/apps/gateway
+WORKDIR /app/apps/gateway
+USER node
+CMD ["node", "src/index.ts"]
