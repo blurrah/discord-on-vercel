@@ -1,0 +1,32 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "services": {
+    "bot": {
+      "root": "apps/bot/",
+      "framework": "hono"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": {
+        "service": "bot"
+      }
+    }
+  ],
+  "daemons": {
+    "gateway": {
+      "root": "./",
+      "entrypoint": "Dockerfile.gateway",
+      "instances": {
+        "iad1": 1
+      },
+      "resources": {
+        "requests": {
+          "memory": "1Gi"
+        }
+      },
+      "terminationGracePeriodSeconds": 15
+    }
+  }
+}
